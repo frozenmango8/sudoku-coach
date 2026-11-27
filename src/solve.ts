@@ -10,7 +10,7 @@ import {
   hasConflict,
   rowOf,
 } from "./grid";
-import { TECHNIQUE_RANK, easiest, type Technique } from "./techniques";
+import { TECHNIQUE_RANK, easiest, type Step, type Technique } from "./techniques";
 
 export interface Rating {
   solved: boolean;
@@ -54,6 +54,14 @@ export function rate(values: ArrayLike<number>, maxRank = 8): Rating {
     }
   }
   return { solved: false, rank, hardest };
+}
+
+export function nextStep(values: ArrayLike<number>, eliminated?: ArrayLike<number>): Step | null {
+  const masks = candidateMasks(values);
+  if (eliminated) {
+    for (let i = 0; i < 81; i++) masks[i] &= ~(eliminated[i] ?? 0);
+  }
+  return easiest(masks);
 }
 
 export function isSolved(values: ArrayLike<number>): boolean {
