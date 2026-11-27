@@ -37,7 +37,19 @@ function order(random: () => number): number[] {
 
 const BLANK = new Array<number>(81).fill(0);
 
-function dig(solved: readonly number[], random: () => number, maxRank: number): { puzzle: number[]; rank: number } {
+function clueCount(puzzle: readonly number[]): number {
+  let count = 0;
+  for (const value of puzzle) if (value) count++;
+  return count;
+}
+
+function dig(
+  solved: readonly number[],
+  random: () => number,
+  maxRank: number,
+  minRank: number,
+  floor: number,
+): { puzzle: number[]; rank: number } {
   const puzzle = solved.slice();
   let rank = 0;
   // A finished logical solve is unique: every filled digit was forced.
@@ -51,6 +63,8 @@ function dig(solved: readonly number[], random: () => number, maxRank: number): 
       continue;
     }
     rank = rated.rank;
+    // Stop once the band is reached and the grid is not a near-empty minimal.
+    if (rank >= minRank && clueCount(puzzle) <= floor) break;
   }
   return { puzzle, rank };
 }
@@ -107,7 +121,8 @@ export function generate(difficulty: Difficulty, random: () => number = Math.ran
     }
     const solved = complete(BLANK, random);
     if (!solved) continue;
-    const dug = dig(solved, random, maxRank);
+    const floor = difficulty === "easy" ? 40 : 32;
+    const dug = dig(solved, random, maxRank, minRank, floor);
     if (dug.rank >= minRank && dug.rank <= maxRank) return dug.puzzle;
   }
   throw new Error(`could not generate a ${difficulty} puzzle`);

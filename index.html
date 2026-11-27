@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f4f0e6" />
+    <title>Sudoku Coach</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect fill='%23f4f0e6' width='16' height='16'/%3E%3Cpath stroke='%231c1916' fill='none' stroke-width='1' d='M1 1h14v14H1zM6 1v14M11 1v14M1 6h14M1 11h14'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Sudoku Coach</h1>
+        <p id="status"></p>
+      </header>
+      <div class="diffs" role="group" aria-label="New puzzle">
+        <button type="button" data-new="easy">Easy</button>
+        <button type="button" data-new="medium">Medium</button>
+        <button type="button" data-new="hard">Hard</button>
+      </div>
+      <div class="layout">
+        <div class="play">
+          <div class="frame">
+            <div class="cols" aria-hidden="true"></div>
+            <div class="body">
+              <div class="rows" aria-hidden="true"></div>
+              <div id="board" class="board" tabindex="0" role="grid" aria-label="Sudoku"></div>
+            </div>
+          </div>
+          <div class="pad" id="pad"></div>
+          <div class="tools">
+            <button type="button" id="pencil" aria-pressed="false">Pencil</button>
+            <button type="button" id="erase">Erase</button>
+          </div>
+          <div class="controls">
+            <button type="button" id="undo">Undo</button>
+            <button type="button" id="redo">Redo</button>
+            <button type="button" id="hint">Hint</button>
+            <button type="button" id="fill">Fill marks</button>
+            <button type="button" id="enter">Enter puzzle</button>
+            <button type="button" id="cancel" hidden>Cancel</button>
+          </div>
+          <p class="keys">Arrows move. 1–9 enters. N pencil. H hint. Backspace erases.</p>
+        </div>
+        <aside>
+          <h2>Hint</h2>
+          <p id="explain" aria-live="polite"></p>
+        </aside>
+      </div>
+    </main>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

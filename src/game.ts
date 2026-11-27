@@ -72,7 +72,6 @@ export function newGame(difficulty: Difficulty, puzzle: ArrayLike<number>): Game
     message: "",
     backup: null,
   };
-  writeNotes(game);
   return game;
 }
 
@@ -245,7 +244,6 @@ export function commitEntry(game: Game): void {
   game.message = "";
   game.backup = null;
   game.notesMode = false;
-  writeNotes(game);
   const hole = game.values.findIndex((value) => value === 0);
   if (hole >= 0) game.selected = hole;
 }
